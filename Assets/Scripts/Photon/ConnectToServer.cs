@@ -21,7 +21,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-        SceneManager.LoadScene("Lobby"); 
+        FadeInFadeOut.Instance.Fade();
+        SceneManager.LoadScene("Lobby");
     }
 
 

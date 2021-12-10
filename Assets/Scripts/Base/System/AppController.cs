@@ -6,6 +6,9 @@ public class AppController : MonoBehaviour
 {
     void Start()
     {
+        SoundManager.Instance.Init();
+        TimerManager.Instance.Init();
+        UIManager.Instance.Init();
 
     }
 
