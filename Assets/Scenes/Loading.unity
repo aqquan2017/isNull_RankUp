@@ -528,25 +528,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382163656}
   m_CullTransparentMesh: 1
---- !u!95 &1382163660
-Animator:
-  serializedVersion: 3
+--- !u!114 &1382163660
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382163656}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: abbbd9d318289f94f90f2761f2e315eb, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10d422b52559da41aa9676770a8fc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSteps:
+  - id: 0
+  duration: 4
+  initializeMode: 2
+  useSmoothDeltaTime: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DOTweenAnimationStep, ns: BrunoMikoski.AnimationSequencer, asm: BrunoMikoski.AnimationSequencerWithManager}
+      data:
+        delay: 1
+        flowType: 0
+        target: {fileID: 1382163656}
+        duration: 1
+        loopCount: -1
+        loopType: 0
+        actions:
+        - id: 1
+    00000001:
+      type: {class: PunchScaleDOTweenAction, ns: BrunoMikoski.AnimationSequencer, asm: BrunoMikoski.AnimationSequencerWithManager}
+      data:
+        direction: 0
+        ease:
+          ease: 31
+          curve:
+            serializedVersion: 2
+            m_Curve: []
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+        isRelative: 0
+        autoKill: 0
+        punch: {x: 0.2, y: 0.2, z: 0.2}
+        vibrato: 0
+        elasticity: 1
 --- !u!1 &1471337968
 GameObject:
   m_ObjectHideFlags: 0
