@@ -34,6 +34,7 @@ public class LobbyPanel : BasePanel
             return;
 
         userData.SetData("HOST", ROLE.HOST);
+        PhotonNetwork.NickName = "HOST";
         PhotonNetwork.CreateRoom(serverRoomID.text);
     }
 
@@ -44,6 +45,7 @@ public class LobbyPanel : BasePanel
             return;
 
         userData.SetData(clientName.text, ROLE.MEMBER);
+        PhotonNetwork.NickName = clientName.text;
         PhotonNetwork.JoinRoom(clientRoomID.text);
     }
 
@@ -56,11 +58,12 @@ public class LobbyPanel : BasePanel
         if (userData.CheckRole(ROLE.HOST))
         {
             PhotonNetwork.LoadLevel("HostLobby");
+            UIManager.Instance.ShowPanel(typeof(HostLobbyPanel));
 
         }
         if (userData.CheckRole(ROLE.MEMBER))
         {
-
+            UIManager.Instance.ShowPanel(typeof(ClientLobbyPanel));
             PhotonNetwork.LoadLevel("ClientLobby");
         }
     }
