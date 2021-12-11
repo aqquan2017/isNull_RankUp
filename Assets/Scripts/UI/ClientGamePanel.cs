@@ -18,11 +18,12 @@ public class ClientGamePanel : BasePanel
     public const byte CheckAnwser = 3;
 
     private int curQuest;
+    private int PlayerPoint;
     private Answer curAnswer;
     public int[] listAnswer;
 
-    [SerializeField] GameObject resultPanel; 
-
+    [SerializeField] GameObject resultPanel;
+    private ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
     public override void OverrideText()
     {
         throw new System.NotImplementedException();
@@ -43,6 +44,7 @@ public class ClientGamePanel : BasePanel
     {
         if(curAnswer == (Answer)listAnswer[curQuest])
         {
+            PlayerPoint++;
             Debug.Log("WINNN"); 
         }
         else
@@ -50,8 +52,17 @@ public class ClientGamePanel : BasePanel
             Debug.Log("LOSEEEE");
 
         }
+        SendPointToHost();
     }
-
+    public void SendPointToHost()
+    {
+        PlayerData playerData = new PlayerData
+        {
+            name = PhotonNetwork.LocalPlayer.NickName,
+            point = PlayerPoint
+        };
+        PhotonNetwork.RaiseEvent(4, playerData as object, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+    }
     public override void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;

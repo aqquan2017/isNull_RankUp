@@ -23,6 +23,8 @@ public class HostGamePanel : BasePanel
     public const byte SendCurQuest = 2;
     public const byte CheckAnwser = 3;
 
+    public const byte AddToLeaderBoard = 4;
+
     public override void OverrideText()
     {
         throw new System.NotImplementedException();
@@ -49,7 +51,7 @@ public class HostGamePanel : BasePanel
         time = questionData.time;
 
         isWait = true;
-        curQuest++;
+
     }
 
     private void Update()
@@ -64,19 +66,15 @@ public class HostGamePanel : BasePanel
         }
         else
         {
-
+            curQuest++;
             //new question, send result for all client
-            if(curQuest >= GameController.Instance.questionDatas.Count)
+            if (curQuest >= GameController.Instance.questionDatas.Count)
             {
                 //end game, show leaderboard
                 Debug.Log("END GAME");
                 isWait = false;
 
-                TimerManager.Instance.AddTimer(4f, () =>
-                {
-                   UIManager.Instance.HideAllPanel();
-                   UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
-                });
+                StartCoroutine(OnEndGame());
             }
             else
             {
@@ -98,9 +96,6 @@ public class HostGamePanel : BasePanel
     IEnumerator OnEndGame()
     {
         PhotonNetwork.RaiseEvent(CheckAnwser, 1, RaiseEventOptions.Default, SendOptions.SendReliable);
-        yield return new WaitForSeconds(3);
-        SendCurrentQuest(curQuest);
-        ShowQuestion(GameController.Instance.questionDatas[curQuest]);
         yield return new WaitForSeconds(3);
         UIManager.Instance.HideAllPanel();
         UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
@@ -124,5 +119,25 @@ public class HostGamePanel : BasePanel
     {
         
         PhotonNetwork.RaiseEvent(SendCurQuest, cur, RaiseEventOptions.Default, SendOptions.SendReliable);
+    }
+    public override void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+    }
+
+    public override void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
+    }
+    private void OnEvent(EventData photonEvent)
+    {
+        byte eventCode = photonEvent.Code;
+        if (eventCode == AddToLeaderBoard)
+        {
+            PlayerData data = (PlayerData)photonEvent.CustomData;
+            bool isAdded = false;
+            
+            GameController.Instance.leaderBoardData.Add((PlayerData)photonEvent.CustomData);
+        }
     }
 }

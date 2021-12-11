@@ -16,11 +16,12 @@ public class LeaderBoardPanel : BasePanel
 
     void Start()
     {
-        for(int i=0; i<PhotonNetwork.PlayerList.Length; i++)
+        
+        for(int i=0; i<GameController.Instance.leaderBoardData.Count; i++)
         {
             var newElement = Instantiate(prefabElement, parentElement);
             newElement.gameObject.SetActive(true);
-            newElement.SetElement(PhotonNetwork.PlayerList[i].NickName, "0");
+            newElement.SetElement(GameController.Instance.leaderBoardData[i].name, GameController.Instance.leaderBoardData[i].point.ToString());
         }
     }
 
