@@ -36,6 +36,7 @@ public class ClientGamePanel : BasePanel
 
     public void ChooseAnwser(int answer)
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
         curAnswer = (Answer)answer;
         Debug.Log(curAnswer.ToString());
     }
