@@ -2,13 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Photon.Pun;
 
 /// <summary>
 /// Base class for any UI panel (Menus, Popups etc)
 /// </summary>
 /// 
 [RequireComponent(typeof(RectTransform))]
-public abstract class BasePanel : MonoBehaviour
+public abstract class BasePanel : MonoBehaviourPunCallbacks
 {
     private RectTransform rect;
 

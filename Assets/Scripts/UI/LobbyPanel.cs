@@ -12,7 +12,7 @@ public class LobbyPanel : BasePanel
 
     [SerializeField] InputField serverRoomID;
     [SerializeField] InputField clientName;
-    [SerializeField] InputField clientRoomID;
+    [SerializeField] InputField clientRoomID;   
 
     private void Start()
     {
@@ -34,6 +34,12 @@ public class LobbyPanel : BasePanel
             return;
 
         PhotonNetwork.JoinRoom(clientRoomID.text);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+        PhotonNetwork.LoadLevel("ClientLobby");
     }
 
     public override void OverrideText()
