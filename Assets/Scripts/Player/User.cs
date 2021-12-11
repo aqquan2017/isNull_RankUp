@@ -8,10 +8,15 @@ public class UserData
     public string userName;
     public ROLE userRole;
 
+    public UserData()
+    {
+        userName = "";
+        userRole = ROLE.NONE;
+    }
 }
 public class User : MonoBehaviour
 {
-    public UserData userData;
+    public UserData userData = new UserData(); 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -19,5 +24,11 @@ public class User : MonoBehaviour
     public bool CheckRole(ROLE roleCheck)
     {
         return userData.userRole == roleCheck ? true : false;
+    }
+
+    public void SetData(string name, ROLE role)
+    {
+        userData.userName = name;
+        userData.userRole = role;
     }
 }

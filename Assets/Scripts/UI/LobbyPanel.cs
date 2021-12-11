@@ -12,34 +12,57 @@ public class LobbyPanel : BasePanel
 
     [SerializeField] InputField serverRoomID;
     [SerializeField] InputField clientName;
-    [SerializeField] InputField clientRoomID;   
+    [SerializeField] InputField clientRoomID;
+
+    public GameObject playerPrefab; 
+    private GameObject curPlayer;
+    private User userData;
 
     private void Start()
     {
         hostBtn.onClick.AddListener(OnHostBtn);
         clientBtn.onClick.AddListener(OnClientBtn);
+
+        curPlayer = GameObject.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        userData = curPlayer.GetComponent<User>();
     }
 
     private void OnHostBtn()
     {
+
         if (string.IsNullOrEmpty(serverRoomID.text))
             return;
 
+        userData.SetData("HOST", ROLE.HOST);
         PhotonNetwork.CreateRoom(serverRoomID.text);
     }
 
     private void OnClientBtn()
     {
+
         if (string.IsNullOrEmpty(clientRoomID.text) || string.IsNullOrEmpty(clientName.text))
             return;
 
+        userData.SetData(clientName.text, ROLE.MEMBER);
         PhotonNetwork.JoinRoom(clientRoomID.text);
     }
 
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        PhotonNetwork.LoadLevel("ClientLobby");
+        UIManager.Instance.HidePanel(typeof(LobbyPanel));
+
+        
+        if (userData.CheckRole(ROLE.HOST))
+        {
+            PhotonNetwork.LoadLevel("HostLobby");
+
+        }
+        if (userData.CheckRole(ROLE.MEMBER))
+        {
+
+            PhotonNetwork.LoadLevel("ClientLobby");
+        }
     }
 
     public override void OverrideText()

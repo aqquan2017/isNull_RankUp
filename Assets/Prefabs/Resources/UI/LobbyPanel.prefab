@@ -648,6 +648,7 @@ MonoBehaviour:
   serverRoomID: {fileID: 1048529312}
   clientName: {fileID: 1510480014076119962}
   clientRoomID: {fileID: 6311561225683873717}
+  playerPrefab: {fileID: 6265459515739518272, guid: d9c0e188f2d3ff54da83ca764f70a060, type: 3}
 --- !u!1 &4587729049312754238
 GameObject:
   m_ObjectHideFlags: 0
