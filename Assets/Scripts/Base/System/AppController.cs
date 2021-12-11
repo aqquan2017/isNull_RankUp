@@ -9,7 +9,7 @@ public class AppController : MonoBehaviour
         SoundManager.Instance.Init();
         TimerManager.Instance.Init();
         UIManager.Instance.Init();
-
+        SceneController.Instance.Init();
     }
 
     
