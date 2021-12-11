@@ -45,23 +45,21 @@ public class ClientGamePanel : BasePanel
         if(curAnswer == (Answer)listAnswer[curQuest])
         {
             PlayerPoint++;
-            Debug.Log("WINNN"); 
+            
         }
         else
         {
-            Debug.Log("LOSEEEE");
-
+            
         }
-        SendPointToHost();
+        if(curQuest>=(listAnswer.Length-1))
+            SendPointToHost();
+        
     }
+ 
     public void SendPointToHost()
     {
-        PlayerData playerData = new PlayerData
-        {
-            name = PhotonNetwork.LocalPlayer.NickName,
-            point = PlayerPoint
-        };
-        PhotonNetwork.RaiseEvent(4, playerData as object, RaiseEventOptions.Default, SendOptions.SendUnreliable);
+        object[] data = new object[] { PhotonNetwork.LocalPlayer.NickName, PlayerPoint };
+        PhotonNetwork.RaiseEvent(4, data, RaiseEventOptions.Default, SendOptions.SendUnreliable);
     }
     public override void OnEnable()
     {
