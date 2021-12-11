@@ -23,7 +23,11 @@ public class LobbyPanel : BasePanel
     private void OnHostBtn()
     {
         if (string.IsNullOrEmpty(serverRoomID.text))
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Missing !!!" ,"Please input Room name !");
             return;
+        }
 
         PhotonNetwork.NickName = "HOST";
         PhotonNetwork.CreateRoom(serverRoomID.text, 
@@ -34,7 +38,11 @@ public class LobbyPanel : BasePanel
     {
 
         if (string.IsNullOrEmpty(clientRoomID.text) || string.IsNullOrEmpty(clientName.text))
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Missing !!!", "Please input Room name and your name !");
             return;
+        }
 
         PhotonNetwork.NickName = clientName.text;
         PhotonNetwork.JoinRoom(clientRoomID.text);

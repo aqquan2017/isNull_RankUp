@@ -6,11 +6,13 @@ public class AppController : MonoBehaviour
 {
     void Start()
     {
-        SoundManager.Instance.Init();
         TimerManager.Instance.Init();
         UIManager.Instance.Init();
         SceneController.Instance.Init();
         GameController.Instance.Init();
+        SoundManager.Instance.Init();
+
+        SoundManager.Instance.PlayLoop(Sounds.BGM, true);
     }
 
     
