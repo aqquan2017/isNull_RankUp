@@ -23,6 +23,9 @@ public class ClientLobbyPanel : BasePanel
 
         curPlayer = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
         view = curPlayer.GetComponent<PhotonView>();
+
+          
+        
     }
 
     void UpdatePlayerList()

@@ -13,7 +13,9 @@ public class HostLobbyPanel : BasePanel
     [SerializeField] Transform clientNameParent;
     [SerializeField] Text clientNamePrefab;
 
-    
+    //public GameObject playerPrefab;
+    //private GameObject curPlayer;
+    //private PhotonView view;
 
     private void Start()
     {
@@ -23,6 +25,9 @@ public class HostLobbyPanel : BasePanel
         roomName.text = "Room name : " + PhotonNetwork.CurrentRoom.Name;
 
         UpdatePlayerList();
+
+        //curPlayer = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
+        //view = curPlayer.GetComponent<PhotonView>();
     }
 
     void UpdatePlayerList()
@@ -61,7 +66,23 @@ public class HostLobbyPanel : BasePanel
         //UIManager.Instance.ShowPanel(typeof(HostGamePanel));
 
         //load for client
+
+        //view.RPC("SwitchGamePanel", RpcTarget.All);
         PhotonNetwork.LoadLevel("Game");
+    }
+
+    [PunRPC]
+    public void SwitchGamePanel()
+    {
+        UIManager.Instance.HideAllPanel();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            UIManager.Instance.ShowPanel(typeof(HostGamePanel));
+        }
+        else
+        {
+            UIManager.Instance.ShowPanel(typeof(ClientGamePanel));
+        }
     }
 
     private void OnCreateQuest()
@@ -73,6 +94,4 @@ public class HostLobbyPanel : BasePanel
     {
         throw new System.NotImplementedException();
     }
-
-    
 }

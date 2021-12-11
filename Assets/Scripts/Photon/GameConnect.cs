@@ -5,9 +5,11 @@ using Photon.Pun;
 
 public class GameConnect : MonoBehaviour
 {
-    
+    PhotonView view;
     void Start()
     {
+        
+        UIManager.Instance.HideAllPanel();
         if (PhotonNetwork.IsMasterClient)
         {
             UIManager.Instance.ShowPanel(typeof(HostGamePanel));

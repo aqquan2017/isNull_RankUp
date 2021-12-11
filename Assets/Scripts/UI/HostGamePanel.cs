@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class HostGamePanel : BasePanel
 {
+    [SerializeField] Text timeTxt;  
+    [SerializeField] Text questionTxt;
+    
+
+
     public override void OverrideText()
     {
         throw new System.NotImplementedException();
@@ -15,9 +22,8 @@ public class HostGamePanel : BasePanel
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChooseAnswer(int question)
     {
-        
+
     }
 }
