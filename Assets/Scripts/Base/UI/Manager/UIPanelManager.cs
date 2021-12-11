@@ -49,7 +49,7 @@ public class UIPanelManager
 
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1242, 2208);
+        scaler.referenceResolution = new Vector2(1920, 1080);
         scaler.screenMatchMode = UnityEngine.UI.CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
         scaler.matchWidthOrHeight = 0.5f;
 
