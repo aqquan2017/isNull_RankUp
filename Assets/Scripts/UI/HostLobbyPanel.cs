@@ -13,6 +13,8 @@ public class HostLobbyPanel : BasePanel
     [SerializeField] Transform clientNameParent;
     [SerializeField] Text clientNamePrefab;
 
+    
+
     private void Start()
     {
         startGame.onClick.AddListener(OnStartGame);
@@ -54,7 +56,12 @@ public class HostLobbyPanel : BasePanel
 
     private void OnStartGame()
     {
+        //load for server
+        //UIManager.Instance.HideAllPanelWithDG();
+        //UIManager.Instance.ShowPanel(typeof(HostGamePanel));
 
+        //load for client
+        PhotonNetwork.LoadLevel("Game");
     }
 
     private void OnCreateQuest()

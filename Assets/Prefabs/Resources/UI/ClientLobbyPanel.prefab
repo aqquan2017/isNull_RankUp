@@ -457,6 +457,7 @@ MonoBehaviour:
   roomName: {fileID: 3010314868240256729}
   clientNameParent: {fileID: 2703915642475600775}
   clientNamePrefab: {fileID: 5148420576864482154}
+  playerPrefab: {fileID: 6265459515739518272, guid: 24129ea5e13912149b5d4b4ed1c6ac2c, type: 3}
 --- !u!1 &5177733303687029479
 GameObject:
   m_ObjectHideFlags: 0

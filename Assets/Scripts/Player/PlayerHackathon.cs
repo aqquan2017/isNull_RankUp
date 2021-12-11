@@ -9,7 +9,7 @@ public class PlayerData
     public int  point;
 
 }
-public class PlayerHackathon : MonoBehaviour
+public class PlayerHackathon : Singleton<PlayerHackathon>
 {
     public PlayerData playerData;
 

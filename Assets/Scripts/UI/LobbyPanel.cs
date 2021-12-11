@@ -14,28 +14,20 @@ public class LobbyPanel : BasePanel
     [SerializeField] InputField clientName;
     [SerializeField] InputField clientRoomID;
 
-    public GameObject playerPrefab; 
-    private GameObject curPlayer;
-    private User userData;
-
     private void Start()
     {
         hostBtn.onClick.AddListener(OnHostBtn);
         clientBtn.onClick.AddListener(OnClientBtn);
-
-        curPlayer = GameObject.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        userData = curPlayer.GetComponent<User>();
     }
 
     private void OnHostBtn()
     {
-
         if (string.IsNullOrEmpty(serverRoomID.text))
             return;
 
-        userData.SetData("HOST", ROLE.HOST);
         PhotonNetwork.NickName = "HOST";
-        PhotonNetwork.CreateRoom(serverRoomID.text);
+        PhotonNetwork.CreateRoom(serverRoomID.text, 
+            new Photon.Realtime.RoomOptions() { MaxPlayers = 10 });
     }
 
     private void OnClientBtn()
@@ -44,7 +36,6 @@ public class LobbyPanel : BasePanel
         if (string.IsNullOrEmpty(clientRoomID.text) || string.IsNullOrEmpty(clientName.text))
             return;
 
-        userData.SetData(clientName.text, ROLE.MEMBER);
         PhotonNetwork.NickName = clientName.text;
         PhotonNetwork.JoinRoom(clientRoomID.text);
     }
@@ -55,16 +46,16 @@ public class LobbyPanel : BasePanel
         UIManager.Instance.HidePanel(typeof(LobbyPanel));
 
         
-        if (userData.CheckRole(ROLE.HOST))
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("HostLobby");
             UIManager.Instance.ShowPanel(typeof(HostLobbyPanel));
+            //PhotonNetwork.LoadLevel("HostLobby");
 
         }
-        if (userData.CheckRole(ROLE.MEMBER))
+        else
         {
             UIManager.Instance.ShowPanel(typeof(ClientLobbyPanel));
-            PhotonNetwork.LoadLevel("ClientLobby");
+            //PhotonNetwork.LoadLevel("ClientLobby");
         }
     }
 

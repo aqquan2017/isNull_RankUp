@@ -11,11 +11,18 @@ public class ClientLobbyPanel : BasePanel
     [SerializeField] Transform clientNameParent;
     [SerializeField] Text clientNamePrefab;
 
+    public GameObject playerPrefab;
+    private GameObject curPlayer;
+    private PhotonView view;
+
     private void Start()
     {
         roomName.text = "Room name : " + PhotonNetwork.CurrentRoom.Name;
 
         UpdatePlayerList();
+
+        curPlayer = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
+        view = curPlayer.GetComponent<PhotonView>();
     }
 
     void UpdatePlayerList()
