@@ -8,7 +8,7 @@ public class GameConnect : MonoBehaviour
     void Start()
     {
         UIManager.Instance.HideAllPanel();
-        SoundManager.Instance.StopAll(true);
+        SoundManager.Instance.StopAll(false);
         SoundManager.Instance.PlayLoop(Sounds.LevelBGM, true);
 
         if (PhotonNetwork.IsMasterClient)

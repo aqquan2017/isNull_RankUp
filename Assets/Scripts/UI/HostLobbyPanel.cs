@@ -54,11 +54,21 @@ public class HostLobbyPanel : BasePanel
 
     private void OnStartGame()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
+
+        if (GameController.Instance.questionDatas.Count == 0)
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Error!", "No question has been created, please create question first!");
+            return;
+        }
+
         PhotonNetwork.LoadLevel("Game");
     }
 
     private void OnCreateQuest()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
         UIManager.Instance.HideAllPanel();
         UIManager.Instance.ShowPanel(typeof(HostQuestionPanel));
     }

@@ -26,10 +26,10 @@ public class HostQuestionPanel : BasePanel
 
     private void Start()
     {
-        answerA.onValueChanged.AddListener ( (x) => ChangeTooggleAnswer(answerA, x));
-        answerB.onValueChanged.AddListener ( (x) => ChangeTooggleAnswer(answerB, x));
-        answerC.onValueChanged.AddListener ( (x) => ChangeTooggleAnswer(answerC, x));
-        answerD.onValueChanged.AddListener ( (x) => ChangeTooggleAnswer(answerD, x));
+        answerA.onValueChanged.AddListener((x) => ChangeTooggleAnswer(answerA, x));
+        answerB.onValueChanged.AddListener((x) => ChangeTooggleAnswer(answerB, x));
+        answerC.onValueChanged.AddListener((x) => ChangeTooggleAnswer(answerC, x));
+        answerD.onValueChanged.AddListener((x) => ChangeTooggleAnswer(answerD, x));
 
         nextQuestBtn.onClick.AddListener(OnNextQuestion);
         backBtn.onClick.AddListener(OnBackBtn);
@@ -37,6 +37,41 @@ public class HostQuestionPanel : BasePanel
 
     private void OnNextQuestion()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
+
+        //check exception
+        if (string.IsNullOrEmpty(timeInput.text))
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Time Input !", "Please input Time for question!");
+            return;
+
+        }
+
+        if (string.IsNullOrEmpty(questionInput.text)
+            || string.IsNullOrEmpty(answerAInput.text)
+            || string.IsNullOrEmpty(answerBInput.text)
+            || string.IsNullOrEmpty(answerCInput.text)
+            || string.IsNullOrEmpty(answerDInput.text))
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Missing Input Question!", "Please type answer and question!");
+            return;
+        }
+
+        if (!answerA.isOn
+            && !answerB.isOn
+            && !answerC.isOn
+            && !answerD.isOn)
+        {
+            UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Missing Right Question!", "Please choose correct answer!");
+            return;
+
+        }
+
+       
+
         QuestionData questionData = new QuestionData
         {
             time = float.Parse(timeInput.text),
@@ -64,10 +99,14 @@ public class HostQuestionPanel : BasePanel
         answerB.isOn = false;
         answerC.isOn = false;
         answerD.isOn = false;
+
+        UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+        UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Create Success", "Your question have been saved!");
     }
 
     private void OnBackBtn()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
         UIManager.Instance.HideAllPanel();
         UIManager.Instance.ShowPanel(typeof(HostLobbyPanel));
     }

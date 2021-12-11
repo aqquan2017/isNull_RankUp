@@ -22,6 +22,8 @@ public class LobbyPanel : BasePanel
 
     private void OnHostBtn()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
+
         if (string.IsNullOrEmpty(serverRoomID.text))
         {
             UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
@@ -36,6 +38,7 @@ public class LobbyPanel : BasePanel
 
     private void OnClientBtn()
     {
+        SoundManager.Instance.Play(Sounds.UI_POPUP);
 
         if (string.IsNullOrEmpty(clientRoomID.text) || string.IsNullOrEmpty(clientName.text))
         {

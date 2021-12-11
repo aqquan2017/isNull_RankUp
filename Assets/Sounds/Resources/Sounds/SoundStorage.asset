@@ -39,7 +39,7 @@ MonoBehaviour:
     isDestroyOnStopPlay: 0
   - audioClip: {fileID: 8300000, guid: fdd7155fdd8bba941994dd5e207a4106, type: 3}
     soundKey: 7
-    soundVolume: 1
+    soundVolume: 0.495
     id: 0
     audioSource: {fileID: 0}
     isDestroyOnStopPlay: 0
