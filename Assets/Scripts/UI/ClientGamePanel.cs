@@ -14,7 +14,15 @@ public enum Answer
 public class ClientGamePanel : BasePanel
 {
     public const byte InitListAnswer = 1;
+    public const byte SendCurQuest = 2;
+    public const byte CheckAnwser = 3;
+
+    private int curQuest;
+    private Answer curAnswer;
     public int[] listAnswer;
+
+    [SerializeField] GameObject resultPanel; 
+
     public override void OverrideText()
     {
         throw new System.NotImplementedException();
@@ -22,15 +30,29 @@ public class ClientGamePanel : BasePanel
 
     private void Start()
     {
-        //int[] answers = (int[])PhotonNetwork.LocalPlayer.CustomProperties["ListAnswer"];
-        Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["ListAnswer"]);
+        
     }
 
     public void ChooseAnwser(int answer)
     {
-
+        curAnswer = (Answer)answer;
+        Debug.Log(curAnswer.ToString());
     }
-    public override void  OnEnable()
+
+    private void CheckAnswer()
+    {
+        if(curAnswer == (Answer)listAnswer[curQuest])
+        {
+            Debug.Log("WINNN"); 
+        }
+        else
+        {
+            Debug.Log("LOSEEEE");
+
+        }
+    }
+
+    public override void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
     }
@@ -45,6 +67,14 @@ public class ClientGamePanel : BasePanel
         if (eventCode == InitListAnswer)
         {
             listAnswer = (int[])photonEvent.CustomData;
+        }
+        else if(eventCode == SendCurQuest)
+        {
+            curQuest = (int) photonEvent.CustomData;
+        }
+        else if (eventCode == CheckAnwser)
+        {
+            CheckAnswer();
         }
     }
 }

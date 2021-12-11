@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class QuestionData
 {
     public string answerA;
@@ -16,5 +17,10 @@ public class QuestionData
     public QuestionData(Answer rightAnswer)
     {
         this.rightAnswer = rightAnswer;
+    }
+
+    public QuestionData()
+    {
+
     }
 }

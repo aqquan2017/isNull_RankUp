@@ -13,10 +13,6 @@ public class HostLobbyPanel : BasePanel
     [SerializeField] Transform clientNameParent;
     [SerializeField] Text clientNamePrefab;
 
-    //public GameObject playerPrefab;
-    //private GameObject curPlayer;
-    //private PhotonView view;
-
     private void Start()
     {
         startGame.onClick.AddListener(OnStartGame);
@@ -25,9 +21,6 @@ public class HostLobbyPanel : BasePanel
         roomName.text = "Room name : " + PhotonNetwork.CurrentRoom.Name;
 
         UpdatePlayerList();
-
-        //curPlayer = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
-        //view = curPlayer.GetComponent<PhotonView>();
     }
 
     void UpdatePlayerList()
@@ -61,34 +54,13 @@ public class HostLobbyPanel : BasePanel
 
     private void OnStartGame()
     {
-        //load for server
-        //UIManager.Instance.HideAllPanelWithDG();
-        //UIManager.Instance.ShowPanel(typeof(HostGamePanel));
-
-        //load for client
-
-        //view.RPC("SwitchGamePanel", RpcTarget.All);
-
         PhotonNetwork.LoadLevel("Game");
-    }
-
-    [PunRPC]
-    public void SwitchGamePanel()
-    {
-        UIManager.Instance.HideAllPanel();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            UIManager.Instance.ShowPanel(typeof(HostGamePanel));
-        }
-        else
-        {
-            UIManager.Instance.ShowPanel(typeof(ClientGamePanel));
-        }
     }
 
     private void OnCreateQuest()
     {
-
+        UIManager.Instance.HideAllPanel();
+        UIManager.Instance.ShowPanel(typeof(HostQuestionPanel));
     }
 
     public override void OverrideText()

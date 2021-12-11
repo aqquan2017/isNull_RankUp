@@ -215,6 +215,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeTxt: {fileID: 5232292735258227340}
   questionTxt: {fileID: 5472355527125581064}
+  answerA: {fileID: 8573503310647037027}
+  answerB: {fileID: 1324074629969396149}
+  answerC: {fileID: 364915668642863093}
+  answerD: {fileID: 2559030877613605530}
 --- !u!1 &2366591287326220473
 GameObject:
   m_ObjectHideFlags: 0

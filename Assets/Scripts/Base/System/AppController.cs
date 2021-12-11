@@ -10,6 +10,7 @@ public class AppController : MonoBehaviour
         TimerManager.Instance.Init();
         UIManager.Instance.Init();
         SceneController.Instance.Init();
+        GameController.Instance.Init();
     }
 
     
