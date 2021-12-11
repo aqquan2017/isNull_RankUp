@@ -68,6 +68,7 @@ public class HostLobbyPanel : BasePanel
         //load for client
 
         //view.RPC("SwitchGamePanel", RpcTarget.All);
+
         PhotonNetwork.LoadLevel("Game");
     }
 

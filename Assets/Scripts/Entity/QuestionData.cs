@@ -12,4 +12,9 @@ public class QuestionData
     public string questionTxt;
     public Answer rightAnswer;
     public float time;
+
+    public QuestionData(Answer rightAnswer)
+    {
+        this.rightAnswer = rightAnswer;
+    }
 }
