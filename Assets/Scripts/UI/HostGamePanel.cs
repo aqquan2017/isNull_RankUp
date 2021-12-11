@@ -134,10 +134,14 @@ public class HostGamePanel : BasePanel
         byte eventCode = photonEvent.Code;
         if (eventCode == AddToLeaderBoard)
         {
-            PlayerData data = (PlayerData)photonEvent.CustomData;
-            bool isAdded = false;
-            
-            GameController.Instance.leaderBoardData.Add((PlayerData)photonEvent.CustomData);
+            object[] data = (object[])photonEvent.CustomData;
+
+
+            GameController.Instance.leaderBoardData.Add(new PlayerData()
+            {
+                name = data[0].ToString(),
+                point=(int)data[1]
+            }); 
         }
     }
 }
