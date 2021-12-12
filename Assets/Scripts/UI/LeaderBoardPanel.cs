@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class LeaderBoardPanel : BasePanel
 {
@@ -30,7 +31,12 @@ public class LeaderBoardPanel : BasePanel
     private void OnPlayAgain() {
         UIManager.Instance.HideAllPanel();
         SoundManager.Instance.Play(Sounds.UI_POPUP);
-        PhotonNetwork.LoadLevel("Loading");
+        FadeInFadeOut.Instance.Fade(1, () => {
+            SceneManager.LoadScene("Lobby");
+            UIManager.Instance.ShowPanel(typeof(LobbyPanel));
+            
+            PhotonNetwork.LeaveRoom();
+        }, 1);
     }
 
 

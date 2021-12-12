@@ -8,9 +8,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     void Start()
     {
-        GameController.Instance.questionDatas.Clear();
-        GameController.Instance.leaderBoardData.Clear();
-
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
         

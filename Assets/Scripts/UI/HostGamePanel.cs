@@ -62,7 +62,7 @@ public class HostGamePanel : BasePanel
         {
             time -= Time.deltaTime;
             int timeInt = (int)time;
-            timeTxt.text = timeInt.ToString();
+            timeTxt.text = "Time : " + timeInt.ToString();
         }
         else
         {
@@ -73,11 +73,13 @@ public class HostGamePanel : BasePanel
                 //end game, show leaderboard
                 isWait = false;
 
-                TimerManager.Instance.AddTimer(3, () =>
-                {
-                    UIManager.Instance.HideAllPanel();
-                    UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
-                });
+
+                UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+                UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("End game!", "Show leaderboard !"
+                    , () => {
+                        UIManager.Instance.HideAllPanel();
+                        UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
+                    });
 
                 PhotonNetwork.RaiseEvent(CheckAnwser, 1, RaiseEventOptions.Default, SendOptions.SendReliable);
             }
@@ -87,11 +89,12 @@ public class HostGamePanel : BasePanel
 
                 PhotonNetwork.RaiseEvent(CheckAnwser, 1, RaiseEventOptions.Default, SendOptions.SendReliable);
 
-                TimerManager.Instance.AddTimer(3f, () =>
-                {
-                    SendCurrentQuest(curQuest);
-                    ShowQuestion(GameController.Instance.questionDatas[curQuest]);
-                });
+                UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
+                UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("The question has ended", "Continue next question!"
+                    , () => {
+                        SendCurrentQuest(curQuest);
+                        ShowQuestion(GameController.Instance.questionDatas[curQuest]);
+                    });
             }
             
 

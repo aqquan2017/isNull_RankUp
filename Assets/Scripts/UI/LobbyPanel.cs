@@ -20,6 +20,13 @@ public class LobbyPanel : BasePanel
         clientBtn.onClick.AddListener(OnClientBtn);
     }
 
+    public override void OnEnable()
+    {
+        base.OnEnable(); 
+        GameController.Instance.questionDatas.Clear();
+        GameController.Instance.leaderBoardData.Clear();
+    }
+
     private void OnHostBtn()
     {
         SoundManager.Instance.Play(Sounds.UI_POPUP);

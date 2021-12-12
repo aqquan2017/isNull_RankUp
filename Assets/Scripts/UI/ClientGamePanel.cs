@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.SceneManagement;
+
 [System.Serializable]
 public enum Answer
 {
@@ -66,23 +68,38 @@ public class ClientGamePanel : BasePanel
 
             SoundManager.Instance.Play(Sounds.WIN_LV);
             UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
-            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Your answer is correct!", "Your point : " + PlayerPoint);
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Your answer is correct!", "Your point : " + PlayerPoint
+                , () => {
+
+                    if (curQuest >= (listAnswer.Length - 1))
+                    {
+                        SendPointToHost();
+                        FadeInFadeOut.Instance.Fade(1, () => {
+                            UIManager.Instance.HideAllPanel();
+                            UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
+                        }, 1);
+                    }
+
+                });
         }
+
         else
         {
             //show panel Wrong
             SoundManager.Instance.Play(Sounds.LOSE_LV);
             UIManager.Instance.ShowPanelWithDG(typeof(TextPopupPanel));
-            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Your answer is wrong!", "Your point : " + PlayerPoint);
+            UIManager.Instance.GetPanel<TextPopupPanel>().SetInfo("Your answer is wrong!", "Your point : " + PlayerPoint
+                , () => {
+                    if (curQuest >= (listAnswer.Length - 1))
+                    {
+                        SendPointToHost();
+                        FadeInFadeOut.Instance.Fade(1, () => {
+                            UIManager.Instance.HideAllPanel();
+                            UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
+                        }, 1);
+                    }
+                });
         }
-
-        if (curQuest >= (listAnswer.Length - 1))
-        {
-            SendPointToHost();
-            UIManager.Instance.HideAllPanel();
-            UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
-        }
-        
     }
  
     public void SendPointToHost()

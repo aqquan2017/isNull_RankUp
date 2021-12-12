@@ -9,10 +9,13 @@ public class TextPopupPanel : BasePanel, IPointerDownHandler
     [SerializeField] private Text header;
     [SerializeField] private Text des;
 
-    public void SetInfo(string head, string desTxt)
+    public event System.Action afterClose;
+
+    public void SetInfo(string head, string desTxt, System.Action closeAct = null)
     {
         header.text = head;
         des.text = desTxt;
+        afterClose = closeAct;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -23,6 +26,7 @@ public class TextPopupPanel : BasePanel, IPointerDownHandler
     public void ClosePanel()
     {
         SoundManager.Instance.Play(Sounds.UI_POPUP);
+        afterClose?.Invoke();
         HideWithDG();
     }
 
