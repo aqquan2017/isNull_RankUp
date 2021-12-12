@@ -22,7 +22,6 @@ public class HostGamePanel : BasePanel
     public const byte InitListAnswer = 1;
     public const byte SendCurQuest = 2;
     public const byte CheckAnwser = 3;
-
     public const byte AddToLeaderBoard = 4;
 
     public override void OverrideText()
@@ -62,7 +61,8 @@ public class HostGamePanel : BasePanel
         if(time > 0)
         {
             time -= Time.deltaTime;
-            timeTxt.text = time.ToString();
+            int timeInt = (int)time;
+            timeTxt.text = timeInt.ToString();
         }
         else
         {
@@ -71,10 +71,15 @@ public class HostGamePanel : BasePanel
             if (curQuest >= GameController.Instance.questionDatas.Count)
             {
                 //end game, show leaderboard
-                Debug.Log("END GAME");
                 isWait = false;
 
-                StartCoroutine(OnEndGame());
+                TimerManager.Instance.AddTimer(3, () =>
+                {
+                    UIManager.Instance.HideAllPanel();
+                    UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
+                });
+
+                PhotonNetwork.RaiseEvent(CheckAnwser, 1, RaiseEventOptions.Default, SendOptions.SendReliable);
             }
             else
             {
@@ -91,14 +96,6 @@ public class HostGamePanel : BasePanel
             
 
         }
-    }
-
-    IEnumerator OnEndGame()
-    {
-        PhotonNetwork.RaiseEvent(CheckAnwser, 1, RaiseEventOptions.Default, SendOptions.SendReliable);
-        yield return new WaitForSeconds(3);
-        UIManager.Instance.HideAllPanel();
-        UIManager.Instance.ShowPanel(typeof(LeaderBoardPanel));
     }
     public void ChooseAnswer(int question)
     {
@@ -136,11 +133,10 @@ public class HostGamePanel : BasePanel
         {
             object[] data = (object[])photonEvent.CustomData;
 
-
             GameController.Instance.leaderBoardData.Add(new PlayerData()
             {
                 name = data[0].ToString(),
-                point=(int)data[1]
+                point = (int)data[1]
             }); 
         }
     }
