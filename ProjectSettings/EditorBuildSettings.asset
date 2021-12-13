@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HostLobby.unity
     guid: ec4e426a5b1640945acd7d7b52012180
+  - enabled: 0
+    path: Assets/Scenes/Test.unity
+    guid: 22a19b4928106e6449476f801aae89bf
   m_configObjects: {}
